@@ -10,7 +10,7 @@ module.exports = async function handler(request, response) {
     return response.status(200).json({
       ok: true,
       database: "online",
-      connector: connectorStatus(last),
+      connector: connectorStatus(last, new Date().toISOString(), 900),
       last_successful_sync_at: last
     });
   } catch (error) {

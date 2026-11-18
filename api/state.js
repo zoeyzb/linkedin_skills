@@ -27,7 +27,7 @@ module.exports = async function handler(request, response) {
       ...payload,
       connector: {
         ...(payload.connector || {}),
-        status: connectorStatus(last, now, 180),
+        status: connectorStatus(last, now, 900),
         last_successful_sync_at: last
       }
     });
