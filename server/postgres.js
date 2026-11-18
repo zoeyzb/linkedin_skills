@@ -17,9 +17,10 @@ function getPool() {
     database,
     port,
     ssl: { rejectUnauthorized: false },
-    max: 3,
-    idleTimeoutMillis: 10000,
-    connectionTimeoutMillis: 5000
+    max: 1,
+    idleTimeoutMillis: 1000,
+    connectionTimeoutMillis: 3000,
+    allowExitOnIdle: true
   });
   return pool;
 }
