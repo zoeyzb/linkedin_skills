@@ -16,8 +16,8 @@ async function enqueue(actionType, payload) {
 }
 
 module.exports = async function handler(request, response) {
-  const parts = Array.isArray(request.query?.path) ? request.query.path : [];
-  const route = "/" + parts.join("/");
+  const pathname = new URL(request.url, "https://linkedin-client-engine.local").pathname;
+  const route = pathname.replace(/^\/api/, "") || "/";
   try {
     if (request.method === "GET") {
       const state = await snapshot();
