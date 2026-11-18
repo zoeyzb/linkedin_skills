@@ -159,3 +159,17 @@ In ChatGPT conversations where the existing Remote Desktop Commander connector i
 ## LinkedIn safety
 
 The system never logs into LinkedIn, scrapes profiles, uses private Voyager endpoints, paginates profile lists, sends invitations, or sends messages. The dashboard only records actions the user confirms they performed.
+
+
+## Opportunity Inbox
+
+The dashboard provides a compact Opportunity Inbox with:
+
+- Service Requests: direct and premium/matched
+- Replies
+- Follow-ups
+- Meetings
+
+Each record can retain the LinkedIn profile URL so the dashboard can open the exact LinkedIn context.
+
+The Service Request table is intentionally local. LinkedIn's public developer access is not treated as a general-purpose personal inbox feed, so the engine never claims real-time synchronization that it cannot verify.

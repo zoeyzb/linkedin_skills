@@ -41,6 +41,9 @@ test("local API imports, deduplicates, drafts, tracks manual actions and exports
   assert.match(html, /Drafts/);
   assert.match(html, /Follow-ups/);
   assert.match(html, /Replies/);
+  assert.match(html, /Opportunity Inbox/);
+  assert.match(html, /PREMIUM \/ MATCHED/);
+  assert.match(html, /DIRECT/);
   assert.match(html, /Reports/);
   assert.match(html, /Record follow/);
   const inlineScript = html.split("<script>")[1]?.split("</script>")[0];
@@ -109,6 +112,31 @@ test("local API imports, deduplicates, drafts, tracks manual actions and exports
     })
   });
   assert.equal(activity.status, 200);
+
+  const serviceRequest = await fetch(base + "/api/service-requests", {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify({
+      request_type: "premium",
+      linkedin_url: "https://www.linkedin.com/in/taylor-premium/",
+      name: "Taylor Premium",
+      company: "Premium Labs",
+      service: "SaaS Development",
+      scope: "Ongoing",
+      timeline: "Within one month",
+      source_url: "https://www.linkedin.com/services/page/000/admin/",
+      received_at: "2026-11-18T10:00:00.000Z"
+    })
+  });
+  assert.equal(serviceRequest.status, 201);
+  const serviceRequestData = await serviceRequest.json();
+  assert.equal(serviceRequestData.request_type, "premium");
+
+  const serviceRequests = await fetch(base + "/api/service-requests?request_type=premium");
+  assert.equal(serviceRequests.status, 200);
+  const serviceRows = await serviceRequests.json();
+  assert.equal(serviceRows.length, 1);
+  assert.equal(serviceRows[0].name, "Taylor Premium");
 
   const report = await fetch(base + "/api/report?start=2026-11-01T00:00:00.000Z&end=2026-12-01T00:00:00.000Z");
   assert.equal(report.status, 200);

@@ -12,6 +12,8 @@ const {
   recordActivity,
   getReport,
   getResearchQueue,
+  createServiceRequest,
+  listServiceRequests,
   recordMeeting,
   getMeetings,
   closeDatabase
@@ -48,6 +50,44 @@ test("requires LinkedIn-only evidence for a prospect to qualify", () => {
   }), { now: "2026-11-15T09:00:00.000Z" });
   assert.equal(saved.qualification_status, "needs_review");
   assert.ok(saved.qualification_reasons.some((reason) => reason.includes("LinkedIn")));
+  closeDatabase(db);
+});
+
+test("stores direct and premium LinkedIn service requests for the opportunity inbox", () => {
+  const db = openDatabase(":memory:");
+  const direct = createServiceRequest(db, {
+    request_type: "direct",
+    linkedin_url: "https://www.linkedin.com/in/client-direct/",
+    name: "Jordan Direct",
+    company: "Direct Labs",
+    service: "Web Development",
+    scope: "One-time website rebuild",
+    timeline: "Within two weeks",
+    source_url: "https://www.linkedin.com/services/page/000/admin/",
+    received_at: "2026-11-18T10:00:00.000Z"
+  });
+  const premium = createServiceRequest(db, {
+    request_type: "premium",
+    linkedin_url: "https://www.linkedin.com/in/client-premium/",
+    name: "Taylor Premium",
+    company: "Premium Labs",
+    service: "SaaS Development",
+    scope: "Ongoing",
+    timeline: "Within one month",
+    source_url: "https://www.linkedin.com/services/page/000/admin/",
+    received_at: "2026-11-18T10:05:00.000Z"
+  });
+  assert.equal(direct.request_type, "direct");
+  assert.equal(premium.request_type, "premium");
+  assert.equal(listServiceRequests(db).length, 2);
+  assert.equal(listServiceRequests(db, { request_type: "premium" })[0].name, "Taylor Premium");
+  const report = getReport(db, {
+    start: "2026-11-18T00:00:00.000Z",
+    end: "2026-11-19T00:00:00.000Z"
+  });
+  assert.equal(report.service_requests.total, 2);
+  assert.equal(report.service_requests.direct, 1);
+  assert.equal(report.service_requests.premium, 1);
   closeDatabase(db);
 });
 

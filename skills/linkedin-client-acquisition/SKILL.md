@@ -105,7 +105,7 @@ Before acting, classify the request:
 4. Use LinkedIn-native People and Posts search URLs as a fallback when public indexing is incomplete. Provide the search link and let the user inspect results in their normal LinkedIn session.
 5. Company websites and official public announcements may corroborate the business need. LinkedIn remains the only outreach channel.
 6. Use the search query pack in the research-and-writing reference. Vary queries across ecommerce, agencies, SaaS, custom software, integrations, and website projects.
-7. Search recent signals first. Prioritize the latest 24 hours to 7 days when possible. Use the latest 30 days as the normal qualification window and never treat an older signal as current without a new verification.
+7. Search recent signals first. Prioritize the latest 24 hours to 7 days when possible. Use the latest 30 days as the qualification window and never treat an older signal as current without a new verification.
 8. Never bulk-scrape LinkedIn, automate pagination, use private Voyager endpoints, collect hidden data, or ask for login cookies or passwords.
 
 ### 3. Research each candidate

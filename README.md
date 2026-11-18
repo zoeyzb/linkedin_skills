@@ -8,7 +8,7 @@ The system is designed to replace a bloated paid outreach stack with a small loc
 
 LinkedIn search → LinkedIn research → qualification → personalized draft → manual send → connection/DM tracking → reply preparation → follow-up → meeting booking → meeting outcome → reporting
 
-The system does **not** send LinkedIn actions automatically.
+The system does **not** send LinkedIn actions automatically. LinkedIn inbox and Service Page request data are not treated as a real-time push feed; the local database is updated when a LinkedIn browser-assisted check/import is performed.
 
 ### Free-by-design
 
@@ -208,6 +208,9 @@ http://127.0.0.1:4177
 
 The dashboard contains:
 
+- Opportunity Inbox with four lanes: Service Requests, Replies, Follow-ups, Meetings
+- Premium/Matched vs Direct service-request tracking
+- Open LinkedIn links on opportunity rows
 - LinkedIn search desk
 - Research Queue
 - Drafts

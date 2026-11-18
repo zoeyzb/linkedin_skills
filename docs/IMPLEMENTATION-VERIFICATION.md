@@ -10,8 +10,8 @@ npm run client-engine:test
 
 Result:
 
-- 40 tests
-- 40 passed
+- 41 tests
+- 41 passed
 - 0 failed
 - 0 skipped
 
@@ -31,6 +31,7 @@ Coverage includes:
 - manual follow/follow-back/comment activity
 - reporting and denominator-safe rates
 - research queue
+- service-request opportunity inbox with direct vs premium/matched records
 - CLI import/brief behavior
 - localhost HTTP API
 - dashboard JavaScript parsing

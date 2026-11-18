@@ -117,6 +117,17 @@ The active LinkedIn default is intentionally bounded to one follow-up reminder, 
 
 Historical workflows called for daily/weekly KPI reporting and pipeline summaries. The local engine now calculates reports from persisted activity instead of relying on screenshots or manually maintained counts.
 
+## Opportunity Inbox and service-request workflow recovered
+
+The local dashboard now has a single Opportunity Inbox with four lanes:
+
+- Service Requests: direct and Premium/matched requests
+- Replies: latest reply and response state
+- Follow-ups: due and upcoming reminders
+- Meetings: scheduled and held conversations
+
+Every item exposes an Open LinkedIn link when a LinkedIn profile URL is known. Service requests are stored locally so they can be triaged without pretending LinkedIn provides a general inbox API to this app.
+
 ## Meeting and booking workflow recovered
 
 The canonical engine now covers the post-reply handoff through local meeting tracking:

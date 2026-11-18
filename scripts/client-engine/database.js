@@ -183,6 +183,27 @@ function openDatabase(dbPath) {
     CREATE INDEX IF NOT EXISTS idx_leads_follow_up ON leads(next_follow_up_at);
     CREATE INDEX IF NOT EXISTS idx_activities_lead_created ON activities(lead_id, created_at);
     CREATE INDEX IF NOT EXISTS idx_meetings_lead_scheduled ON meetings(lead_id, scheduled_at DESC);
+    CREATE TABLE IF NOT EXISTS service_requests (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      request_type TEXT NOT NULL,
+      request_key TEXT NOT NULL UNIQUE,
+      linkedin_url TEXT,
+      name TEXT NOT NULL,
+      company TEXT,
+      service TEXT NOT NULL,
+      scope TEXT,
+      timeline TEXT,
+      business_size TEXT,
+      budget TEXT,
+      details TEXT,
+      source_url TEXT NOT NULL,
+      received_at TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'new',
+      notes TEXT NOT NULL DEFAULT '',
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL
+    );
+    CREATE INDEX IF NOT EXISTS idx_service_requests_type_status ON service_requests(request_type, status, received_at DESC);
   `);
   ensureColumn(db, "leads", "signal_strength", "TEXT NOT NULL DEFAULT 'weak'");
   ensureColumn(db, "leads", "external_support_signal", "INTEGER NOT NULL DEFAULT 0");
@@ -683,6 +704,81 @@ function recordActivity(db, profileUrl, activityType, note = "", options = {}) {
   return getLeadById(db, lead.id);
 }
 
+
+const SERVICE_REQUEST_TYPES = new Set(["direct", "premium"]);
+const SERVICE_REQUEST_STATUSES = new Set(["new", "reviewed", "proposal_drafted", "responded", "declined", "archived"]);
+
+function createServiceRequest(db, input = {}, options = {}) {
+  const requestType = String(input.request_type || "").trim().toLowerCase();
+  if (!SERVICE_REQUEST_TYPES.has(requestType)) throw new Error("Service request type must be direct or premium");
+
+  const sourceUrl = String(input.source_url || "").trim();
+  if (!validHttpsUrl(sourceUrl) || !sourceUrl.includes("linkedin.com")) {
+    throw new Error("Service request source_url must be a LinkedIn HTTPS URL");
+  }
+
+  const name = String(input.name || "").trim();
+  const service = String(input.service || "").trim();
+  if (!name || !service) throw new Error("Service request name and service are required");
+
+  const receivedAt = String(input.received_at || "").trim();
+  if (!receivedAt || Number.isNaN(new Date(receivedAt).getTime())) {
+    throw new Error("Service request received_at must be a valid date/time");
+  }
+
+  const requestKey = String(input.request_key || [
+    requestType,
+    input.linkedin_url || "",
+    name,
+    service,
+    receivedAt
+  ].join("|")).trim();
+  const now = options.now || new Date().toISOString();
+
+  const existing = db.prepare("SELECT * FROM service_requests WHERE request_key = ?").get(requestKey);
+  if (existing) return existing;
+
+  const result = db.prepare("INSERT INTO service_requests (request_type, request_key, linkedin_url, name, company, service, scope, timeline, business_size, budget, details, source_url, received_at, status, notes, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'new', ?, ?, ?)").run(
+    requestType,
+    requestKey,
+    String(input.linkedin_url || "").trim() || null,
+    name,
+    String(input.company || "").trim(),
+    service,
+    String(input.scope || "").trim(),
+    String(input.timeline || "").trim(),
+    String(input.business_size || "").trim(),
+    String(input.budget || "").trim(),
+    String(input.details || "").trim(),
+    sourceUrl,
+    new Date(receivedAt).toISOString(),
+    String(input.notes || "").trim(),
+    now,
+    now
+  );
+  return db.prepare("SELECT * FROM service_requests WHERE id = ?").get(Number(result.lastInsertRowid));
+}
+
+function listServiceRequests(db, options = {}) {
+  const limit = Number.isInteger(options.limit) ? Math.min(Math.max(options.limit, 1), 1000) : 100;
+  const requestType = String(options.request_type || "").trim().toLowerCase();
+  const status = String(options.status || "").trim().toLowerCase();
+  const clauses = [];
+  const params = [];
+  if (requestType) {
+    if (!SERVICE_REQUEST_TYPES.has(requestType)) throw new Error("Invalid service request type");
+    clauses.push("request_type = ?");
+    params.push(requestType);
+  }
+  if (status) {
+    if (!SERVICE_REQUEST_STATUSES.has(status)) throw new Error("Invalid service request status");
+    clauses.push("status = ?");
+    params.push(status);
+  }
+  const where = clauses.length ? "WHERE " + clauses.join(" AND ") : "";
+  return db.prepare("SELECT * FROM service_requests " + where + " ORDER BY received_at DESC LIMIT ?").all(...params, limit);
+}
+
 function getResearchQueue(db, options = {}) {
   const limit = Number.isInteger(options.limit) ? Math.min(Math.max(options.limit, 1), 1000) : 100;
   return db.prepare("SELECT * FROM leads WHERE research_status <> 'verified' AND status NOT IN ('rejected','archived','not_interested','booked') ORDER BY score DESC, updated_at DESC LIMIT ?")
@@ -724,10 +820,17 @@ function getReport(db, options = {}) {
   ]));
   const positiveTypes = new Set(["interested", "question", "not_now", "booked"]);
   const positiveReplies = replyRows.filter((row) => positiveTypes.has(row.classification)).reduce((sum, row) => sum + row.count, 0);
+  const serviceRequestRows = db.prepare("SELECT request_type, COUNT(*) AS count FROM service_requests WHERE received_at >= ? AND received_at < ? GROUP BY request_type").all(from, to);
+  const serviceRequests = {
+    total: serviceRequestRows.reduce((sum, row) => sum + row.count, 0),
+    direct: serviceRequestRows.find((row) => row.request_type === "direct")?.count || 0,
+    premium: serviceRequestRows.find((row) => row.request_type === "premium")?.count || 0
+  };
   return {
     window: { start: from, end: to },
     leads,
     meetings,
+    service_requests: serviceRequests,
     activities,
     replies: { total: repliesTotal, by_type: byType, positive: positiveReplies },
     rates: {
@@ -757,6 +860,8 @@ module.exports = {
   listMeetings,
   recordActivity,
   getResearchQueue,
+  createServiceRequest,
+  listServiceRequests,
   getReport,
   listLeads,
   getSummary,

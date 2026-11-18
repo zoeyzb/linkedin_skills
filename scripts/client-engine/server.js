@@ -13,6 +13,8 @@ const {
   listMeetings,
   recordActivity,
   getResearchQueue,
+  createServiceRequest,
+  listServiceRequests,
   getReport,
   listLeads,
   getSummary,
@@ -148,6 +150,14 @@ function createAppServer(options = {}) {
         }
         return;
       }
+      if (req.method === "GET" && requestUrl.pathname === "/api/service-requests") {
+        sendJson(res, 200, listServiceRequests(db, {
+          request_type: requestUrl.searchParams.get("request_type") || "",
+          status: requestUrl.searchParams.get("status") || "",
+          limit: Number(requestUrl.searchParams.get("limit")) || 100
+        }));
+        return;
+      }
       if (req.method === "GET" && requestUrl.pathname === "/api/report") {
         const end = requestUrl.searchParams.get("end") || new Date().toISOString();
         const start = requestUrl.searchParams.get("start") || new Date(Date.now() - 7 * 86400000).toISOString();
@@ -203,6 +213,12 @@ function createAppServer(options = {}) {
         return;
       }
 
+      if (req.method === "POST" && requestUrl.pathname === "/api/service-requests") {
+        const body = await readJsonBody(req);
+        const saved = createServiceRequest(db, body);
+        sendJson(res, 201, saved);
+        return;
+      }
       if (req.method === "POST" && requestUrl.pathname === "/api/leads") {
         const body = await readJsonBody(req);
         const saved = upsertLead(db, body);
