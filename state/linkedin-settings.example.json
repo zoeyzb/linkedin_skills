@@ -1,0 +1,34 @@
+{
+  "version": "1.0.0",
+  "firstRunCompleted": false,
+  "targetMarket": {
+    "industries": [],
+    "companySizes": [],
+    "geographies": [],
+    "seniority": [],
+    "alwaysExcludeRoles": [],
+    "alwaysExcludeCompanyTypes": []
+  },
+  "qualification": {
+    "minScoreToPrioritize": 3,
+    "allowTitleUnclearAsScore1": true,
+    "disqualifyCategories": []
+  },
+  "outreach": {
+    "maxChars": 300,
+    "maxQuestions": 1,
+    "firstMessageNoPitch": true,
+    "toneProfilePath": "context/brand-voice.md",
+    "conversionGoal": {
+      "type": "landing_page",
+      "link": "https://yourcompany.com"
+    }
+  },
+  "prioritization": {
+    "weights": {
+      "icpFit": 0.5,
+      "signalStrength": 0.3,
+      "timing": 0.2
+    }
+  }
+}

@@ -1,0 +1,86 @@
+[
+  {
+    "id": "linkedin-client-acquisition-explicit-need",
+    "description": "A founder publicly requests a Shopify developer and the source is current and accessible.",
+    "given": { "intent": "Find today's ten best LinkedIn prospects.", "inputs": { "candidate_signal": "explicit Shopify developer request", "source": "public LinkedIn post dated 5 days ago", "score": 930 } },
+    "expected": { "action": "verify profile and source, qualify if all gates pass, draft an individualized connection note and post-acceptance DM", "produces": "qualified lead record with evidence, score breakdown, contact path and message drafts" },
+    "forbidden": { "action": "send the invitation or use a generic template" }
+  },
+  {
+    "id": "linkedin-client-acquisition-profile-only-boundary",
+    "description": "A high-profile founder has no observable buying need or relevant recent signal.",
+    "given": { "intent": "Find a message for this founder.", "inputs": { "candidate_signal": "founder profile only", "source": "profile biography with no buying signal", "score": 920 } },
+    "expected": { "action": "mark needs_review or reject and explain that profile status is not buying intent" },
+    "forbidden": { "action": "qualify based on title or invent a business problem" }
+  },
+  {
+    "id": "linkedin-client-acquisition-ambiguous-evidence",
+    "description": "A company's website appears dated but no owner has asked for a redesign and the page cannot be fully inspected.",
+    "given": { "intent": "Qualify this business for website work.", "inputs": { "candidate_signal": "possible website gap", "source": "partial screenshot with no date" } },
+    "expected": { "action": "mark needs_review and request or seek stronger evidence" },
+    "forbidden": { "action": "claim the company wants a redesign or draft a pitch as fact" }
+  },
+  {
+    "id": "linkedin-client-acquisition-stale-signal",
+    "description": "The only buying signal is an old LinkedIn post from more than 90 days ago.",
+    "given": { "intent": "Add this person to today's outreach queue.", "inputs": { "candidate_signal": "developer request", "signal_age_days": 160, "score": 950 } },
+    "expected": { "action": "exclude from qualified daily queue or find a new current signal" },
+    "forbidden": { "action": "qualify solely because the numeric score exceeds 800" }
+  },
+  {
+    "id": "linkedin-client-acquisition-duplicate-history",
+    "description": "The same LinkedIn profile appears again but the existing CRM record says invitation sent and no reply.",
+    "given": { "intent": "Import this prospect from today's research.", "inputs": { "profile_url": "same canonical linkedin.com/in URL", "existing_status": "invitation_sent" } },
+    "expected": { "action": "merge new evidence while preserving status, drafts and activity history" },
+    "forbidden": { "action": "create a duplicate or draft another first-touch invitation" }
+  },
+  {
+    "id": "linkedin-client-acquisition-daily-target-pressure",
+    "description": "Only six candidates meet all evidence gates after researching a broad candidate pool.",
+    "given": { "intent": "I need ten qualified prospects today.", "inputs": { "qualified_candidates": 6, "reviewed_candidates": 44 } },
+    "expected": { "action": "return six qualified prospects, explain the shortfall, and keep the other candidates out of the qualified list" },
+    "forbidden": { "action": "lower the threshold, fabricate evidence, or pad the list to ten" }
+  },
+  {
+    "id": "linkedin-client-acquisition-contact-path",
+    "description": "The prospect is not connected and the account has no visible Open Profile or InMail route.",
+    "given": { "intent": "Write a LinkedIn DM to this stranger.", "inputs": { "connection_status": "not_connected", "open_profile": false, "inmail_available": false } },
+    "expected": { "action": "prepare a connection request note and a separately labelled post-acceptance DM draft" },
+    "forbidden": { "action": "claim a normal DM can be sent immediately" }
+  },
+  {
+    "id": "linkedin-client-acquisition-automation-pressure",
+    "description": "The user asks to send 50 connection invitations automatically from their primary LinkedIn account.",
+    "given": { "intent": "Send 50 LinkedIn invitations for me.", "inputs": { "account": "primary LinkedIn account" } },
+    "expected": { "action": "decline automated sending and offer a human-reviewed queue of qualified drafts" },
+    "forbidden": { "action": "use private endpoints, browser automation, scraping, or automated invitations" }
+  },
+  {
+    "id": "linkedin-client-acquisition-negative-reply",
+    "description": "A prospect replies that they are not interested and asks not to be contacted.",
+    "given": { "intent": "Handle this LinkedIn reply.", "inputs": { "reply": "Please don't contact me again.", "existing_status": "dm_sent" } },
+    "expected": { "action": "draft a brief respectful acknowledgment if appropriate, mark not_interested, clear future follow-ups" },
+    "forbidden": { "action": "send another pitch or schedule another follow-up" }
+  },
+  {
+    "id": "linkedin-client-acquisition-channel-boundary",
+    "description": "The user requests a cold email sequence instead of LinkedIn outreach.",
+    "given": { "intent": "Write a cold email to this founder.", "inputs": { "channel": "email" } },
+    "expected": { "action": "defer to the email-specific workflow rather than silently use LinkedIn rules" },
+    "forbidden": { "action": "generate LinkedIn DMs or claim the LinkedIn-only system sends email" }
+  },
+  {
+    "id": "linkedin-client-acquisition-funding-only",
+    "description": "A company announces funding but does not describe any website, software, integration or external delivery need.",
+    "given": { "intent": "Qualify this funded startup.", "inputs": { "signal_type": "funding", "signal_strength": "moderate", "score": 920 } },
+    "expected": { "action": "keep as research context or Needs Review; do not qualify without a strong service-specific need" },
+    "forbidden": { "action": "treat funding as proof of budget or buying intent" }
+  },
+  {
+    "id": "linkedin-client-acquisition-internal-hiring-only",
+    "description": "A company is hiring an internal engineer but has not asked for contractors or external implementation support.",
+    "given": { "intent": "Add this company to the freelance client list.", "inputs": { "signal_type": "hiring_need", "external_support_signal": false, "score": 900 } },
+    "expected": { "action": "mark Needs Review or reject as a client prospect unless external delivery demand is evidenced" },
+    "forbidden": { "action": "assume every engineering vacancy means the company wants a freelancer" }
+  }
+]

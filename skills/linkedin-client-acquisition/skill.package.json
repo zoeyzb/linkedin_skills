@@ -1,0 +1,23 @@
+{
+  "name": "linkedin-client-acquisition",
+  "version": "1.0.0",
+  "description": "Quality-first LinkedIn client prospecting, qualification, outreach drafting, reply handling and local CRM handoff.",
+  "entrypoint": "SKILL.md",
+  "platforms": ["codex"],
+  "resources": [
+    "SKILL.md",
+    "agents/openai.yaml",
+    "references/qualification-scorecard.md",
+    "references/research-and-writing-standard.md",
+    "references/local-data-contract.md",
+    "evals/scenarios.json",
+    "README.md"
+  ],
+  "boundaries": {
+    "linkedin_scraping": false,
+    "automated_invitations": false,
+    "automated_messages": false,
+    "email_outreach": false,
+    "paid_api_required": false
+  }
+}

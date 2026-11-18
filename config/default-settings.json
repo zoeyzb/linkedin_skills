@@ -1,0 +1,147 @@
+{
+  "version": "2.0.0",
+  "firstRunCompleted": false,
+  "timezone": "America/Chicago",
+  "cadence": {
+    "frequency": "daily",
+    "dailyQualifiedTarget": 10
+  },
+  "targetMarket": {
+    "industries": [
+      "Software",
+      "Technology",
+      "SaaS",
+      "Digital Services",
+      "Professional Services",
+      "Ecommerce",
+      "Marketing Agencies"
+    ],
+    "companySizes": [
+      "1-10",
+      "11-50",
+      "51-200"
+    ],
+    "geographies": [
+      "United States"
+    ],
+    "seniority": [
+      "Founder",
+      "Owner",
+      "CEO",
+      "CTO",
+      "VP",
+      "Head",
+      "Director",
+      "Agency Owner"
+    ],
+    "alwaysExcludeRoles": [
+      "Recruiter",
+      "Talent Acquisition",
+      "HR Recruiter"
+    ],
+    "alwaysExcludeCompanyTypes": [
+      "Staffing agency without a delivery-partner signal"
+    ]
+  },
+  "serviceLanes": [
+    {
+      "id": "full_stack_web",
+      "priority": 1,
+      "label": "Full-stack web and product development"
+    },
+    {
+      "id": "ai_automation",
+      "priority": 2,
+      "label": "AI automation, agents and integrations"
+    },
+    {
+      "id": "qa_debugging",
+      "priority": 3,
+      "label": "Debugging, QA and reliability"
+    },
+    {
+      "id": "shopify_ecommerce",
+      "priority": 4,
+      "label": "Shopify and ecommerce"
+    }
+  ],
+  "qualification": {
+    "minScoreToPrioritize": 800,
+    "allowTitleUnclearAsScore1": true,
+    "maxSignalAgeDays": 30,
+    "disqualifyCategories": [
+      "competitor",
+      "unrelated",
+      "recruiter",
+      "stale",
+      "unverified",
+      "closed",
+      "unsupported_scope"
+    ]
+  },
+  "research": {
+    "source": "linkedin_only",
+    "candidateBatchSize": 20,
+    "qualifiedDailyTarget": 10,
+    "requiredEvidence": [
+      "linkedin_profile_url",
+      "source_url",
+      "signal_date",
+      "signal_summary",
+      "contact_path"
+    ],
+    "logFields": [
+      "specific_fit",
+      "evidence_link",
+      "qualification_risk",
+      "next_question",
+      "relevant_proof_point",
+      "connection_note"
+    ]
+  },
+  "outreach": {
+    "channel": "linkedin",
+    "dailyQualifiedTarget": 10,
+    "dailyDraftCap": 10,
+    "dailyFollowUpCap": 10,
+    "maxChars": 300,
+    "maxQuestions": 1,
+    "firstMessageNoPitch": true,
+    "toneProfilePath": "context/brand-voice.md",
+    "humanApprovalRequired": true,
+    "followUpDefaultBusinessDays": 2,
+    "sequence": [
+      "connection",
+      "first_dm",
+      "one_follow_up"
+    ]
+  },
+  "prioritization": {
+    "weights": {
+      "icpFit": 0.5,
+      "signalStrength": 0.3,
+      "timing": 0.2
+    }
+  },
+  "automationBoundary": {
+    "automated": [
+      "research organization",
+      "deduplication",
+      "qualification",
+      "drafting",
+      "draft version history",
+      "follow-up reminders",
+      "reply preparation",
+      "reporting",
+      "pipeline tracking"
+    ],
+    "manualApprovalRequired": [
+      "connection requests",
+      "messages",
+      "follows",
+      "likes",
+      "comments",
+      "post publishing"
+    ]
+  }
+}

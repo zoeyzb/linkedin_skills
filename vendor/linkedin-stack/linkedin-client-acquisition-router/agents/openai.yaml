@@ -1,0 +1,4 @@
+interface:
+  display_name: "Linkedin Client Acquisition Router"
+  short_description: "Orchestrate LinkedIn-led freelance client acquisition: positioning, inbound authority, founder/agency prospecting, sales qualification, tools and pipeline impro"
+  default_prompt: "Use this skill for its stated capability. Follow the approval gates and verify every external action."

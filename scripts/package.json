@@ -1,0 +1,25 @@
+{
+  "name": "linkedin-skills-system",
+  "version": "1.2.0",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "bootstrap": "node bootstrap-system.js",
+    "lead-filter": "node run-lead-filter.js ../sample_contacts.csv",
+    "draft": "node run-draft-outreach.js",
+    "reply": "node run-reply-handler.js",
+    "outcome": "node record-outcome.js",
+    "weekly-report": "node generate-weekly-report.js",
+    "client-engine": "node client-engine/cli.js",
+    "client-engine:serve": "node client-engine/cli.js serve",
+    "client-engine:package-skill": "node client-engine/cli.js package-skill",
+    "client-engine:test": "node --test ../tests/client-engine/*.test.js",
+    "client-engine:report": "node client-engine/cli.js report weekly",
+    "client-engine:research": "node client-engine/cli.js research-queue",
+    "client-engine:activity": "node client-engine/cli.js activity",
+    "client-engine:sequence": "node client-engine/cli.js sequence"
+  }
+}

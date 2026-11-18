@@ -1,0 +1,251 @@
+{
+  "name": "linkedin-prospecting-engine",
+  "version": "1.0.0",
+  "entrypoint": "SKILL.md",
+  "resources": [
+    {
+      "path": "references/BEAREACH_SETUP_SAFETY_OVERRIDE.md"
+    },
+    {
+      "path": "references/UPSTREAM_SOURCES.md"
+    },
+    {
+      "path": "references/upstream/linkedin-agent-skill/skills/li-dm/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-agent-skill/skills/li-inbox/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-growth-skills/skills/linkedin-lead-generation/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-growth-skills/skills/linkedin-lead-generation/references/dm-scripts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-growth-skills/skills/linkedin-lead-generation/references/platform-reality.md"
+    },
+    {
+      "path": "references/upstream/linkedin-growth-skills/skills/linkedin-lead-generation/references/voice-rules.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/LICENSE"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/behavioural-science/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/behavioural-science/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/behavioural-science/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/claude-setup/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/claude-setup/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/cold-email/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/cold-email/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/cold-email/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/copy-frameworks/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/copy-frameworks/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/copy-frameworks/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/french-market/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/french-market/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/french-market/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/icp/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/icp/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/icp/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-channel/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-channel/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-channel/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-messages/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-messages/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/linkedin-messages/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/method/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/method/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/method/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/outreach-frameworks/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/outreach-frameworks/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/outreach-frameworks/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/personas/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/personas/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/personas/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/practitioners/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/practitioners/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/practitioners/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/voice/README.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/voice/evidence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/research/voice/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/bereach-setup/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/bereach-setup/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/references/deliverability.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/references/frameworks.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/references/legal.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/cold-email/references/sequence.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/first-dm.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/follow-ups.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/frameworks.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/invitation-note.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-messages/references/sequence-5.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/advanced.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/conversation-review.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/frameworks.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/icp.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/measuring.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-outreach-method/references/search-doors.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-personas/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-personas/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-personas/references/frameworks.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-personas/references/persona-card.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-personas/references/sources.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-voice/SKILL.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-voice/references/artifacts.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-voice/references/frameworks.md"
+    },
+    {
+      "path": "references/upstream/linkedin-prospecting-skills/skills/linkedin-voice/references/voice-card-template.md"
+    }
+  ],
+  "evals": "evals/scenarios.json"
+}

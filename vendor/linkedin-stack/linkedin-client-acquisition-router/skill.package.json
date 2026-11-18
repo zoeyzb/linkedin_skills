@@ -1,0 +1,14 @@
+{
+  "name": "linkedin-client-acquisition-router",
+  "version": "1.0.0",
+  "entrypoint": "SKILL.md",
+  "resources": [
+    {
+      "path": "references/CLIENT_ACQUISITION_PLAYBOOK.md"
+    },
+    {
+      "path": "references/UPSTREAM_SOURCES.md"
+    }
+  ],
+  "evals": "evals/scenarios.json"
+}

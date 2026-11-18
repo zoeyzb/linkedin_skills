@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>LinkedIn Client Engine</title>
+<style>
+:root{color-scheme:light;--ink:#17221d;--muted:#68756e;--line:#dfe6df;--paper:#f5f7f3;--card:#fff;--green:#176b4b;--green-soft:#e7f3eb;--amber:#8c5b13;--amber-soft:#fff3dc;--red:#9a3535;--red-soft:#faeaea;--shadow:0 12px 35px rgba(23,34,29,.06)}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:14px/1.5 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--green);text-decoration:none}a:hover{text-decoration:underline}button,input,textarea,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);border-radius:9px;background:#fff;color:var(--ink);padding:9px 12px;font-weight:600}button:hover{border-color:#9db9a7;background:#f9fcf9}button.primary{background:var(--green);border-color:var(--green);color:#fff}button.primary:hover{background:#10583d}button.small{font-size:12px;padding:6px 9px}button.danger{color:var(--red)}input,textarea,select{width:100%;border:1px solid var(--line);border-radius:9px;padding:10px;background:#fff;color:var(--ink)}textarea{min-height:84px;resize:vertical}label{display:block;font-size:12px;font-weight:700;color:#44534a;margin:0 0 5px}.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 60px}.top{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:25px}.brand{display:flex;align-items:center;gap:12px}.mark{width:38px;height:38px;border-radius:12px;background:var(--green);color:#fff;display:grid;place-items:center;font-weight:800;font-size:17px}.eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase}.top h1{font-size:23px;line-height:1.15;margin:2px 0 0;letter-spacing:-.03em}.top p{margin:4px 0 0;color:var(--muted);font-size:12px}.actions{display:flex;gap:8px;flex-wrap:wrap}.grid{display:grid;gap:14px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.stat,.panel,.lead{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow)}.stat{padding:16px}.stat strong{display:block;font-size:27px;letter-spacing:-.04em}.stat span{color:var(--muted);font-size:12px}.target{height:7px;background:#edf1ec;border-radius:99px;margin-top:11px;overflow:hidden}.target>i{display:block;height:100%;background:var(--green);width:0;transition:width .2s}.layout{grid-template-columns:1.05fr .95fr;align-items:start}.panel{padding:18px;margin-bottom:15px}.panel-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}.panel h2{font-size:15px;margin:0;letter-spacing:-.01em}.muted{color:var(--muted)}.tiny{font-size:11px;color:var(--muted)}.search-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}.search{padding:10px;border:1px solid var(--line);border-radius:10px;background:#fcfdfb}.search strong{display:block;font-size:12px}.search p{margin:3px 0 7px;color:var(--muted);font-size:11px}.search a{font-size:11px;font-weight:700}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field.full{grid-column:1/-1}.scores{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.scores label{font-size:10px}.scores input{padding:8px}.form-actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}.leads{display:grid;gap:12px}.lead{padding:16px}.lead-top{display:flex;justify-content:space-between;gap:15px;align-items:flex-start}.lead h3{margin:0;font-size:15px}.lead .sub{font-size:12px;color:var(--muted);margin-top:2px}.score{white-space:nowrap;border-radius:8px;background:var(--green-soft);color:var(--green);font-weight:800;padding:5px 8px;font-size:12px}.score.review{background:var(--amber-soft);color:var(--amber)}.score.reject{background:var(--red-soft);color:var(--red)}.meta{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.pill{font-size:10px;color:#536158;background:#f1f4f0;border-radius:99px;padding:4px 8px}.evidence{background:#f8faf7;border-left:3px solid #a7c7b0;padding:9px 11px;border-radius:0 8px 8px 0;margin:10px 0;font-size:12px}.reason{font-size:11px;color:var(--amber);margin:8px 0}.draft-grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}.draft-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:8px}.divider{height:1px;background:var(--line);margin:14px 0}.empty{padding:22px;text-align:center;border:1px dashed #cbd5cc;border-radius:10px;color:var(--muted);font-size:12px}.notice{background:var(--green-soft);border:1px solid #c8dfcf;color:#27553a;border-radius:10px;padding:11px 13px;font-size:12px;margin-bottom:15px}.warning{background:var(--amber-soft);border:1px solid #f1d9a7;color:#6b4a17;border-radius:10px;padding:11px 13px;font-size:12px;margin-bottom:15px}.hidden{display:none!important}.filters{display:flex;gap:8px;align-items:center}.filters select{width:auto;min-width:150px;padding:7px}.toast{position:fixed;bottom:18px;right:18px;background:#17221d;color:white;padding:11px 14px;border-radius:10px;box-shadow:var(--shadow);z-index:5;max-width:320px}.reply{display:grid;grid-template-columns:1fr 170px;gap:8px;margin-top:10px}.ops-grid{display:grid;gap:8px}.queue-item{padding:9px 10px;border:1px solid var(--line);border-radius:9px;background:#fcfdfb}.queue-item strong{display:block;font-size:12px}.queue-item p{margin:3px 0 0;font-size:11px;color:var(--muted)}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.metric{padding:10px;border:1px solid var(--line);border-radius:9px;background:#fcfdfb}.metric strong{display:block;font-size:18px}.metric span{font-size:10px;color:var(--muted)}.footer{margin-top:20px;color:var(--muted);font-size:11px;text-align:center}
+@media(max-width:850px){.layout{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.wrap{padding:18px 12px 40px}.top{align-items:flex-start;flex-direction:column}.search-list{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.field.full{grid-column:auto}.scores{grid-template-columns:repeat(2,1fr)}.lead-top{flex-direction:column}.reply{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark">L</div>
+      <div><div class="eyebrow">Private local workspace</div><h1>LinkedIn Client Engine</h1><p>Research deeply. Qualify honestly. Draft personally. You send.</p></div>
+    </div>
+    <div class="actions">
+      <button id="refreshBtn">Refresh</button>
+      <a href="/api/export.csv"><button class="primary">Export CSV</button></a>
+    </div>
+  </header>
+
+  <div class="notice"><strong>Manual LinkedIn actions only.</strong> This workspace does not scrape LinkedIn, send invitations, or send DMs. It stores research and drafts so you can review and send them yourself.</div>
+
+  <section class="grid stats">
+    <div class="stat"><strong id="qualifiedCount">0 / 10</strong><span>Qualified today</span><div class="target"><i id="targetBar"></i></div></div>
+    <div class="stat"><strong id="draftedCount">0</strong><span>Drafts prepared today</span></div>
+    <div class="stat"><strong id="followupsCount">0</strong><span>Follow-ups due</span></div>
+    <div class="stat"><strong id="repliedCount">0</strong><span>Replies recorded</span></div>
+  </section>
+
+  <div class="grid layout">
+    <main>
+      <section class="panel">
+        <div class="panel-head"><h2>Today's LinkedIn search desk</h2><span class="tiny">People + public posts</span></div>
+        <p class="tiny">Open these searches in LinkedIn. Review the result, then add only prospects with a concrete reason to buy.</p>
+        <div id="searches" class="search-list"><div class="empty">Loading LinkedIn searches…</div></div>
+      </section>
+
+      <section class="panel">
+        <div class="panel-head"><h2>Add a researched prospect</h2><span class="tiny">Evidence required to qualify</span></div>
+        <form id="leadForm">
+          <div class="form-grid">
+            <div class="field"><label for="name">Full name</label><input id="name" required></div>
+            <div class="field"><label for="title">Current title</label><input id="title" required></div>
+            <div class="field"><label for="company">Company</label><input id="company" required></div>
+            <div class="field"><label for="linkedin_url">LinkedIn profile URL</label><input id="linkedin_url" type="url" placeholder="https://www.linkedin.com/in/…" required></div>
+            <div class="field"><label for="company_website">Company website</label><input id="company_website" type="url" placeholder="https://…"></div>
+            <div class="field"><label for="source_url">Evidence URL</label><input id="source_url" type="url" placeholder="LinkedIn post or official company page" required></div>
+            <div class="field"><label for="signal_type">Buying signal</label><select id="signal_type"><option value="explicit_request">Explicit request for help</option><option value="website_gap">Verified website / conversion gap</option><option value="hiring_need">Relevant hiring need</option><option value="launch">Product or store launch</option><option value="expansion">Business expansion</option><option value="integration_need">Integration requirement</option><option value="agency_overflow">Agency delivery overflow</option><option value="funding">Funding / growth trigger</option><option value="other">Other verified signal</option><option value="profile_only">Profile only (not qualifying)</option></select></div>
+            <div class="field"><label for="signal_strength">Signal strength</label><select id="signal_strength"><option value="weak">Weak / profile-only</option><option value="moderate">Moderate / context only</option><option value="strong">Strong / current need</option><option value="explicit">Explicit request</option></select></div>
+            <div class="field"><label for="contact_path">Verified LinkedIn contact path</label><select id="contact_path"><option value="unavailable">Not verified</option><option value="connection_request_note">Connection request available</option><option value="first_degree_dm">Already connected</option><option value="open_profile_dm">Open Profile DM available</option><option value="inmail">InMail available</option></select></div>
+            <div class="field"><label for="external_support_signal">External contractor / agency demand</label><select id="external_support_signal"><option value="false">Not established</option><option value="true">Explicitly stated in source</option></select></div>
+            <div class="field"><label for="signal_date">Signal date</label><input id="signal_date" type="date" required></div>
+            <div class="field full"><label for="signal_summary">What exactly did you verify?</label><textarea id="signal_summary" required placeholder="Describe the specific business need and what the source actually says or shows."></textarea></div>
+            <div class="field"><label for="evidence_status">Evidence status</label><select id="evidence_status"><option value="verified">Verified from source</option><option value="needs_review">Needs review</option></select></div>
+            <div class="field"><label for="source_type">Source type</label><select id="source_type"><option value="linkedin_post">LinkedIn post</option><option value="linkedin_profile">LinkedIn profile</option><option value="company_website">Company website</option><option value="public_announcement">Public announcement</option></select></div>
+            <div class="field full"><label>Score breakdown (AI/researcher-provided, with evidence)</label><div class="scores">
+              <div><label for="score_need">Need / 300</label><input id="score_need" type="number" min="0" max="300" value="0"></div>
+              <div><label for="score_service_fit">Service fit / 250</label><input id="score_service_fit" type="number" min="0" max="250" value="0"></div>
+              <div><label for="score_authority">Authority / 150</label><input id="score_authority" type="number" min="0" max="150" value="0"></div>
+              <div><label for="score_timing">Timing / 150</label><input id="score_timing" type="number" min="0" max="150" value="0"></div>
+              <div><label for="score_reachability">Reachability / 100</label><input id="score_reachability" type="number" min="0" max="100" value="0"></div>
+              <div><label for="score_capacity">Capacity / 50</label><input id="score_capacity" type="number" min="0" max="50" value="0"></div>
+            </div></div>
+            <details class="field full"><summary class="tiny" style="cursor:pointer;font-weight:700;margin-bottom:8px">Evidence note for each non-zero score (required to qualify)</summary><div class="form-grid">
+              <div><label for="evidence_need">Need evidence</label><textarea id="evidence_need"></textarea></div>
+              <div><label for="evidence_service_fit">Service-fit evidence</label><textarea id="evidence_service_fit"></textarea></div>
+              <div><label for="evidence_authority">Authority evidence</label><textarea id="evidence_authority"></textarea></div>
+              <div><label for="evidence_timing">Timing evidence</label><textarea id="evidence_timing"></textarea></div>
+              <div><label for="evidence_reachability">Reachability evidence</label><textarea id="evidence_reachability"></textarea></div>
+              <div><label for="evidence_capacity">Capacity evidence</label><textarea id="evidence_capacity"></textarea></div>
+            </div></details>
+            <div class="field full"><label for="fit_reason">Why this person/company fits</label><textarea id="fit_reason" placeholder="Tie the evidence to a specific service we offer."></textarea></div>
+            <div class="field full"><label for="outreach_angle">Best personal outreach angle</label><textarea id="outreach_angle" placeholder="One specific observation or reason for starting a conversation."></textarea></div>
+          </div>
+          <div class="form-actions"><span class="tiny">No email or phone fields. LinkedIn only.</span><button class="primary" type="submit">Save prospect</button></div>
+        </form>
+      </section>
+    </main>
+
+    <aside>
+      <section class="panel">
+        <div class="panel-head"><h2>Import ChatGPT research</h2><span class="tiny">JSON batch</span></div>
+        <p class="tiny">Use the LinkedIn Client Acquisition skill to research and qualify prospects. Import its JSON output here to save everything in one database.</p>
+        <input id="importFile" type="file" accept=".json,application/json">
+        <div class="form-actions"><span class="tiny">Up to 500 candidates per batch</span><button id="importBtn" class="primary">Import JSON</button></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Research Queue</h2><span class="tiny" id="researchCount">0 waiting</span></div>
+        <div id="researchQueue" class="ops-grid"><div class="empty">Nothing waiting for research.</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Drafts</h2><span class="tiny">Editable text stays in SQLite</span></div>
+        <div id="draftQueue" class="ops-grid"><div class="empty">No drafts ready.</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Follow-ups</h2><span class="tiny">Due + upcoming reminders</span></div>
+        <div id="followupQueue" class="ops-grid"><div class="empty">No follow-ups queued.</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Replies</h2><span class="tiny">Latest response + prepared reply</span></div>
+        <div id="replyQueue" class="ops-grid"><div class="empty">No replies recorded.</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Meetings</h2><span class="tiny">Manual booking + outcome tracking</span></div>
+        <div class="form-grid">
+          <div><label>LinkedIn profile URL</label><input id="meetingLinkedinUrl" placeholder="https://www.linkedin.com/in/..."></div>
+          <div><label>Date / time</label><input id="meetingDate" type="datetime-local"></div>
+          <div><label>Meeting link (optional)</label><input id="meetingUrl" placeholder="https://meet.google.com/..."></div>
+          <div><label>Status</label><select id="meetingStatus"><option value="scheduled">Scheduled</option><option value="held">Held</option><option value="cancelled">Cancelled</option><option value="no_show">No-show</option></select></div>
+          <div><label>Outcome</label><input id="meetingOutcome" placeholder="Qualified opportunity, proposal requested..."></div>
+          <div><label>Next step</label><input id="meetingNextStep" placeholder="Send proposal, follow up Friday..."></div>
+        </div>
+        <label>Notes</label><textarea id="meetingNotes" placeholder="Meeting context or notes"></textarea>
+        <div class="form-actions"><span class="tiny">No calendar API, paid scheduler or external CRM required.</span><button id="saveMeeting" class="primary">Save meeting</button></div>
+        <div id="meetingQueue" class="ops-grid"><div class="empty">No meetings recorded.</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Reports</h2><span class="tiny">Last 7 days</span></div>
+        <div id="reportSummary" class="metric-grid"><div class="empty">Loading report…</div></div>
+      </section>
+      <section class="panel">
+        <div class="panel-head"><h2>Prospect queue</h2><div class="filters"><select id="statusFilter"><option value="">All statuses</option><option value="qualified">Qualified</option><option value="drafted">Drafted</option><option value="invitation_sent">Invitation sent</option><option value="connected">Connected</option><option value="dm_sent">DM sent</option><option value="replied">Replied</option><option value="follow_up_due">Follow-up due</option><option value="needs_review">Needs review</option><option value="not_interested">Not interested</option></select></div></div>
+        <div id="leads" class="leads"><div class="empty">No prospects saved yet. Start with the LinkedIn search desk or import a research batch.</div></div>
+      </section>
+    </aside>
+  </div>
+  <div class="footer">Local-only dashboard · SQLite persistence · No external API keys · No automated LinkedIn actions · Record follow / follow-back / like / comment manually.</div>
+</div>
+<div id="toast" class="toast hidden" role="status"></div>
+<script>
+const $ = (id) => document.getElementById(id);
+const esc = (value) => String(value ?? "").replace(/[&<>"']/g, (ch) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[ch]));
+async function api(path, options={}) {
+  const response = await fetch(path, { ...options, headers: { ...(options.body ? {"content-type":"application/json"} : {}), ...(options.headers || {}) } });
+  const contentType = response.headers.get("content-type") || "";
+  const payload = contentType.includes("application/json") ? await response.json() : await response.text();
+  if (!response.ok) throw new Error(payload.error || payload || "Request failed");
+  return payload;
+}
+function toast(message) {
+  $("toast").textContent = message;
+  $("toast").classList.remove("hidden");
+  setTimeout(() => $("toast").classList.add("hidden"), 3200);
+}
+function dateToday() { return new Date().toISOString().slice(0,10); }
+function renderSearches(items) {
+  $("searches").innerHTML = items.map((item) => `<div class="search"><strong>${esc(item.category)} · ${esc(item.surface)}</strong><p>${esc(item.purpose)}</p><a href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">Open LinkedIn search ↗</a></div>`).join("");
+}
+function renderSummary(data) {
+  $("qualifiedCount").textContent = `${data.qualified_today} / ${data.daily_target}`;
+  $("draftedCount").textContent = data.drafted_today;
+  $("followupsCount").textContent = data.followups_due;
+  $("repliedCount").textContent = data.replied;
+  $("targetBar").style.width = `${Math.min(100, data.qualified_today / data.daily_target * 100)}%`;
+}
+function leadCard(lead) {
+  const scoreClass = lead.qualification_status === "qualified" ? "score" : lead.qualification_status === "rejected" ? "score reject" : "score review";
+  const reasons = (lead.qualification_reasons || []).map(esc).join(" · ");
+  const scoreRows = Object.entries(lead.score_breakdown || {}).map(([key, points]) =>
+    `<li><strong>${esc(key.replace(/_/g," "))}: ${esc(points)}</strong> · ${esc((lead.score_evidence || {})[key] || "No evidence note")}</li>`
+  ).join("");
+  const canDraft = lead.qualification_status === "qualified";
+  const active = !["not_interested","rejected","archived","booked"].includes(lead.status);
+  const canInvite = canDraft && active && ["qualified","drafted"].includes(lead.status);
+  const canConnect = active && (lead.status === "invitation_sent" || (canDraft && ["qualified","drafted"].includes(lead.status) && lead.contact_path === "first_degree_dm"));
+  const directPath = ["first_degree_dm","open_profile_dm","inmail"].includes(lead.contact_path);
+  const canDm = active && (["connected","dm_sent","replied","follow_up_due"].includes(lead.status) || (canDraft && ["qualified","drafted"].includes(lead.status) && directPath));
+  const canFollow = active && ["dm_sent","replied"].includes(lead.status);
+  const canReply = active && ["invitation_sent","connected","dm_sent","replied","follow_up_due"].includes(lead.status);
+  const showActions = canInvite || canConnect || canDm || canFollow || canReply;
+  return `<article class="lead" data-url="${esc(lead.linkedin_url)}">
+    <div class="lead-top"><div><h3>${esc(lead.name)}</h3><div class="sub">${esc(lead.title)} · ${esc(lead.company)}</div></div><div class="${scoreClass}">${lead.score}/1000</div></div>
+    <div class="meta"><span class="pill">${esc(lead.status)}</span><span class="pill">${esc(lead.signal_type || "no signal")}</span><span class="pill">${esc(lead.signal_strength || "weak")}</span><span class="pill">${esc(lead.signal_date || "undated")}</span><span class="pill">${esc(lead.contact_path || "contact route unverified")}</span></div>
+    <div class="evidence">${esc(lead.signal_summary || "No evidence summary recorded.")}<div class="tiny" style="margin-top:5px"><a href="${esc(lead.source_url || "#")}" target="_blank" rel="noopener noreferrer">View evidence ↗</a> · <a href="${esc(lead.linkedin_url)}" target="_blank" rel="noopener noreferrer">Open LinkedIn profile ↗</a></div></div>
+    ${reasons ? `<div class="reason">${reasons}</div>` : ""}
+    ${lead.fit_reason ? `<p class="tiny">${esc(lead.fit_reason)}</p>` : ""}
+    ${scoreRows ? `<details class="tiny"><summary style="cursor:pointer;font-weight:700">Score evidence</summary><ul>${scoreRows}</ul></details>` : ""}
+    ${canDraft ? `<div class="draft-grid">
+      <div><label>Connection invitation draft</label><textarea class="inviteDraft" placeholder="Paste the individually researched invitation">${esc(lead.invitation_draft || "")}</textarea></div>
+      <div><label>First DM after acceptance</label><textarea class="dmDraft" placeholder="Paste the researched first DM">${esc(lead.first_dm_draft || "")}</textarea></div>
+      <div><label>Follow-up draft</label><textarea class="followDraft" placeholder="Paste a contextual follow-up">${esc(lead.follow_up_draft || "")}</textarea></div>
+    </div>
+    <div class="draft-actions"><button class="small primary saveDraft">Save drafts</button><button class="small copyInvite">Copy invitation</button><button class="small copyDm">Copy DM</button></div>` : ""}
+    ${lead.last_reply_text ? `<div class="evidence"><strong>Latest reply:</strong> ${esc(lead.last_reply_text)}</div>` : ""}
+    ${lead.last_reply_draft ? `<div><label>Saved reply draft</label><textarea class="savedReplyDraft" readonly>${esc(lead.last_reply_draft)}</textarea></div>` : ""}
+    ${showActions ? `<div class="divider"></div><div class="draft-actions">
+      ${canInvite ? '<button class="small markInvitation">Mark invitation sent</button>' : ""}
+      ${canConnect ? '<button class="small markConnected">Mark accepted</button>' : ""}
+      ${canDm ? '<button class="small markDm">Mark DM sent</button>' : ""}
+      ${canFollow ? '<button class="small markFollow">Set follow-up due</button><button class="small recordFollow">Record follow</button><button class="small recordFollowBack">Record follow-back</button><button class="small recordComment">Record comment</button>' : ""}
+    </div>` : ""}
+    ${canReply ? `<div class="reply"><textarea class="replyText" placeholder="Paste their actual reply here"></textarea><select class="replyType"><option value="interested">Interested</option><option value="question">Question</option><option value="not_now">Not now</option><option value="not_interested">Not interested</option><option value="unsubscribe">Stop contact</option><option value="booked">Booked</option><option value="needs_review">Needs review</option></select></div>
+    <div><label>Response draft (not sent)</label><textarea class="replyDraft" placeholder="Paste the response prepared by ChatGPT"></textarea></div>
+    <div class="reply"><div><label>Optional follow-up date for a not-now reply</label><input class="replyFollowDate" type="date"></div><div class="draft-actions" style="align-items:end"><button class="small recordReply">Record reply</button></div></div>` : ""}
+  </article>`;
+}
+function addBusinessDays(start, count) {
+  const date = new Date(start);
+  let added = 0;
+  while (added < count) {
+    date.setDate(date.getDate() + 1);
+    const day = date.getDay();
+    if (day !== 0 && day !== 6) added += 1;
+  }
+  return date;
+}
+function bindLeadCards() {
+  document.querySelectorAll(".lead").forEach((card) => {
+    const url = card.dataset.url;
+    const post = async (path, body) => { await api(path, {method:"POST", body:JSON.stringify(body)}); await refresh(); };
+    const button = (selector, fn) => {
+      const element = card.querySelector(selector);
+      if (!element) return;
+      element.addEventListener("click", async () => { try { await fn(); toast("Saved."); } catch (error) { toast(error.message); } });
+    };
+    button(".saveDraft", () => post("/api/drafts", {linkedin_url:url,drafts:{invitation:card.querySelector(".inviteDraft").value,first_dm:card.querySelector(".dmDraft").value,follow_up:card.querySelector(".followDraft").value}}));
+    button(".copyInvite", async () => { await navigator.clipboard.writeText(card.querySelector(".inviteDraft").value); });
+    button(".copyDm", async () => { await navigator.clipboard.writeText(card.querySelector(".dmDraft").value); });
+    button(".markInvitation", () => post("/api/status",{linkedin_url:url,status:"invitation_sent",manual_confirmed:true,note:"User confirmed invitation was manually sent."}));
+    button(".markConnected", () => post("/api/status",{linkedin_url:url,status:"connected",manual_confirmed:true,note:"User confirmed connection acceptance."}));
+    button(".markDm", () => post("/api/status",{linkedin_url:url,status:"dm_sent",manual_confirmed:true,note:"User confirmed DM was manually sent."}));
+    button(".markFollow", () => {
+      const date = addBusinessDays(new Date(), 2);
+      return post("/api/status",{linkedin_url:url,status:"follow_up_due",next_follow_up_at:date.toISOString(),note:"User set a two-business-day LinkedIn follow-up reminder."});
+    });
+    button(".recordFollow", () => post("/api/activity",{linkedin_url:url,activity_type:"followed",note:"User manually followed the prospect."}));
+    button(".recordFollowBack", () => post("/api/activity",{linkedin_url:url,activity_type:"follow_back",note:"Prospect follow-back manually observed."}));
+    button(".recordComment", () => post("/api/activity",{linkedin_url:url,activity_type:"commented",note:"User manually commented on a relevant LinkedIn post."}));
+    button(".recordReply", () => {
+      const text = card.querySelector(".replyText").value.trim();
+      if (!text) throw new Error("Paste the actual reply first.");
+      const followDate = card.querySelector(".replyFollowDate").value;
+      const nextFollowUp = followDate ? new Date(followDate + "T09:00:00").toISOString() : undefined;
+      return post("/api/replies",{linkedin_url:url,reply:{
+        text,
+        classification:card.querySelector(".replyType").value,
+        draft:card.querySelector(".replyDraft").value.trim(),
+        next_follow_up_at:nextFollowUp
+      }});
+    });
+  });
+}
+function renderLeads(items) {
+  $("leads").innerHTML = items.length ? items.map(leadCard).join("") : '<div class="empty">No prospects in this view.</div>';
+  bindLeadCards();
+}
+function renderResearchQueue(items) {
+  $("researchCount").textContent = String(items.length) + " waiting";
+  $("researchQueue").innerHTML = items.length ? items.slice(0,6).map(function(lead) {
+    return '<div class="queue-item"><strong>' + esc(lead.name) + ' · ' + esc(lead.company) + '</strong><p>' + esc(lead.title) + ' · ' + esc(lead.research_risk || "Needs source verification") + '</p><p>' + esc(lead.next_question || lead.signal_summary || "Research the current buying need.") + '</p></div>';
+  }).join("") : '<div class="empty">Nothing waiting for research.</div>';
+}
+function renderDraftQueue(leads) {
+  const rows = leads.filter(function(lead) { return lead.qualification_status === "qualified" && ["qualified","drafted"].includes(lead.status); }).slice(0,6);
+  $("draftQueue").innerHTML = rows.length ? rows.map(function(lead) {
+    return '<div class="queue-item"><strong>' + esc(lead.name) + ' · ' + esc(lead.score) + '/1000</strong><p>' + esc(lead.company) + ' · ' + esc(lead.status) + ' · ' + (lead.invitation_draft || lead.first_dm_draft || lead.follow_up_draft ? "text saved" : "needs draft") + '</p></div>';
+  }).join("") : '<div class="empty">No drafts waiting.</div>';
+}
+function renderFollowupQueue(leads) {
+  const now = new Date().toISOString();
+  const rows = leads.filter(function(lead) { return lead.next_follow_up_at && !["not_interested","rejected","archived","booked"].includes(lead.status); })
+    .sort(function(a,b) { return a.next_follow_up_at.localeCompare(b.next_follow_up_at); }).slice(0,8);
+  $("followupQueue").innerHTML = rows.length ? rows.map(function(lead) {
+    const due = lead.next_follow_up_at <= now;
+    return '<div class="queue-item"><strong>' + esc(lead.name) + ' · ' + (due ? "DUE NOW" : "Upcoming") + '</strong><p>' + esc(new Date(lead.next_follow_up_at).toLocaleString()) + ' · ' + esc(lead.company) + '</p><p>' + esc(lead.follow_up_draft || "No follow-up text saved yet.") + '</p></div>';
+  }).join("") : '<div class="empty">No follow-ups queued.</div>';
+}
+function renderReplyQueue(leads) {
+  const rows = leads.filter(function(lead) { return lead.last_reply_text; }).slice(0,6);
+  $("replyQueue").innerHTML = rows.length ? rows.map(function(lead) {
+    return '<div class="queue-item"><strong>' + esc(lead.name) + ' · ' + esc(lead.reply_type || "needs_review") + '</strong><p>' + esc(lead.last_reply_text) + '</p><p>' + esc(lead.last_reply_draft || "Response draft not saved yet.") + '</p></div>';
+  }).join("") : '<div class="empty">No replies recorded.</div>';
+}
+function renderMeetingQueue(meetings) {
+  $("meetingQueue").innerHTML = meetings.length ? meetings.slice(0,8).map(function(meeting) {
+    return '<div class="queue-item"><strong>' + esc(meeting.name) + ' · ' + esc(meeting.status) + '</strong><p>' + esc(meeting.company) + ' · ' + esc(new Date(meeting.scheduled_at).toLocaleString()) + '</p><p>' + esc(meeting.outcome || meeting.notes || "Meeting recorded.") + '</p><p>' + esc(meeting.next_step || "No next step recorded.") + '</p></div>';
+  }).join("") : '<div class="empty">No meetings recorded.</div>';
+}
+function renderReport(report) {
+  const rate = function(value) { return value == null ? "—" : String(value) + "%"; };
+  $("reportSummary").innerHTML = [
+    ["Qualified", report.leads.qualified],
+    ["Invites", report.activities.invitation_sent],
+    ["Accepted", report.activities.connected],
+    ["DMs", report.activities.dm_sent],
+    ["Replies", report.replies.total],
+    ["Booked", report.leads.booked],
+    ["Held calls", report.meetings ? report.meetings.held : 0],
+    ["Acceptance", rate(report.rates.acceptance_rate)],
+    ["Reply rate", rate(report.rates.reply_rate)]
+  ].map(function(item) { return '<div class="metric"><strong>' + esc(item[1]) + '</strong><span>' + esc(item[0]) + '</span></div>'; }).join("");
+}
+async function refresh() {
+  const [summary, leads, searches, researchQueue, report, meetings] = await Promise.all([
+    api("/api/summary"),
+    api("/api/leads?limit=100" + ($("statusFilter").value ? "&status="+encodeURIComponent($("statusFilter").value) : "")),
+    api("/api/searches"),
+    api("/api/research-queue?limit=25"),
+    api("/api/report"),
+    api("/api/meetings?limit=25")
+  ]);
+  renderSummary(summary);
+  renderLeads(leads);
+  renderSearches(searches);
+  renderResearchQueue(researchQueue);
+  renderDraftQueue(leads);
+  renderFollowupQueue(leads);
+  renderReplyQueue(leads);
+  renderMeetingQueue(meetings);
+  renderReport(report);
+}
+$("leadForm").addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const value = (id) => $(id).value.trim();
+  const payload = {
+    name:value("name"),title:value("title"),company:value("company"),linkedin_url:value("linkedin_url"),
+    company_website:value("company_website"),source_url:value("source_url"),source_type:value("source_type"),
+    signal_type:value("signal_type"),signal_strength:value("signal_strength"),contact_path:value("contact_path"),
+    external_support_signal:value("external_support_signal")==="true",
+    signal_summary:value("signal_summary"),signal_date:value("signal_date"),
+    evidence_status:value("evidence_status"),
+    score_breakdown:{need:Number(value("score_need")),service_fit:Number(value("score_service_fit")),authority:Number(value("score_authority")),timing:Number(value("score_timing")),reachability:Number(value("score_reachability")),capacity:Number(value("score_capacity"))},
+    score_evidence:{need:value("evidence_need"),service_fit:value("evidence_service_fit"),authority:value("evidence_authority"),timing:value("evidence_timing"),reachability:value("evidence_reachability"),capacity:value("evidence_capacity")},
+    fit_reason:value("fit_reason"),outreach_angle:value("outreach_angle")
+  };
+  try {
+    const saved = await api("/api/leads",{method:"POST",body:JSON.stringify(payload)});
+    toast(`Saved ${saved.name}: ${saved.qualification_status} (${saved.score}/1000)`);
+    $("leadForm").reset(); $("signal_date").value=dateToday(); await refresh();
+  } catch (error) { toast(error.message); }
+});
+$("importBtn").addEventListener("click", async () => {
+  const file = $("importFile").files[0];
+  if (!file) return toast("Choose a JSON research batch first.");
+  try {
+    const data = JSON.parse(await file.text());
+    const result = await api("/api/leads/import",{method:"POST",body:JSON.stringify(data)});
+    toast(`Imported ${result.imported}, duplicates ${result.duplicates}, errors ${result.errors}.`);
+    await refresh();
+  } catch (error) { toast(error.message); }
+});
+$("refreshBtn").addEventListener("click", () => refresh().catch((error) => toast(error.message)));
+$("saveMeeting").addEventListener("click", async () => {
+  try {
+    const profileUrl = $("meetingLinkedinUrl").value.trim();
+    const date = $("meetingDate").value;
+    if (!profileUrl || !date) throw new Error("LinkedIn profile URL and meeting date/time are required.");
+    await api("/api/meetings", {method:"POST", body:JSON.stringify({
+      linkedin_url:profileUrl,
+      meeting:{
+        status:$("meetingStatus").value,
+        scheduled_at:new Date(date).toISOString(),
+        meeting_url:$("meetingUrl").value.trim(),
+        notes:$("meetingNotes").value.trim(),
+        outcome:$("meetingOutcome").value.trim(),
+        next_step:$("meetingNextStep").value.trim()
+      }
+    })});
+    toast("Meeting saved.");
+    await refresh();
+  } catch (error) {
+    toast(error.message);
+  }
+});
+$("statusFilter").addEventListener("change", () => refresh().catch((error) => toast(error.message)));
+$("signal_date").value = dateToday();
+refresh().catch((error) => toast(error.message));
+</script>
+</body>
+</html>

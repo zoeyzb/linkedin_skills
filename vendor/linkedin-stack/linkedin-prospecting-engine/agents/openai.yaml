@@ -1,0 +1,4 @@
+interface:
+  display_name: "Linkedin Prospecting Engine"
+  short_description: "Research LinkedIn prospects, define ICP/personas, learn the user’s voice, draft connection invitations, DMs and follow-ups, and review reply quality. Use for re"
+  default_prompt: "Use this skill for its stated capability. Follow the approval gates and verify every external action."

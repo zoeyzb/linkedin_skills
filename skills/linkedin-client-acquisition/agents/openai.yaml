@@ -1,0 +1,4 @@
+interface:
+  display_name: "LinkedIn Client Acquisition"
+  short_description: "Find, qualify and draft 10 evidence-backed LinkedIn prospects daily"
+  default_prompt: "Find today's 10 strongest LinkedIn client prospects for my web and software services. Research their actual needs, verify evidence, deduplicate, score, write individual connection and DM drafts, and prepare an import-ready JSON batch. Do not send anything."
