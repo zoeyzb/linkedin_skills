@@ -16,6 +16,7 @@ const {
 } = require("./database");
 const { buildLinkedInSearches } = require("./searches");
 const { createAppServer } = require("./server");
+const { runSyncCycle, syncLoop } = require("./browser-sync");
 
 const ROOT = path.resolve(__dirname, "../..");
 const DB_PATH = process.env.LINKEDIN_CLIENT_DB || path.join(ROOT, "state", "linkedin-client-engine.sqlite3");
@@ -38,6 +39,8 @@ Commands:
   export-csv <file>             Export prospect and draft records
   package-skill                 Build and verify the Agent Skill ZIP
   serve [port]                  Start the localhost dashboard (default 4177)
+  sync-once                     Read LinkedIn through the existing bridge and publish the dashboard snapshot
+  sync [seconds]                Run read-only LinkedIn browser sync continuously (default 600s)
 
 No command sends LinkedIn invitations or messages.
 `);
@@ -180,6 +183,16 @@ function main() {
   if (command === "package-skill") {
     const { packageSkill } = require("./package-skill");
     console.log(JSON.stringify({ package: packageSkill(), status: "verified" }, null, 2));
+    return;
+  }
+  if (command === "sync-once") {
+    console.log(JSON.stringify(runSyncCycle(), null, 2));
+    return;
+  }
+  if (command === "sync") {
+    const interval = args[0] ? Number(args[0]) : 600;
+    if (!Number.isInteger(interval) || interval < 120) throw new Error("Sync interval must be an integer of at least 120 seconds");
+    syncLoop(interval);
     return;
   }
   if (command === "serve") {

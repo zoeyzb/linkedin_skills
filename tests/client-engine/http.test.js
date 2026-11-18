@@ -36,7 +36,7 @@ test("local API imports, deduplicates, drafts, tracks manual actions and exports
   assert.match(html, /signal_strength/);
   assert.match(html, /contact_path/);
   assert.match(html, /score_evidence/);
-  assert.match(html, /Manual LinkedIn actions only/);
+  assert.match(html, /Read-only LinkedIn browser sync/);
   assert.match(html, /Research Queue/);
   assert.match(html, /Drafts/);
   assert.match(html, /Follow-ups/);

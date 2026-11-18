@@ -218,3 +218,18 @@ Keep out of Git:
 - caches
 
 The goal is a single lightweight source of truth without turning the Mac into a second copy of every connected application.
+
+
+## Hosted Vercel cockpit and browser-sync layer
+
+The system now has a hosted operational read model in addition to the local SQLite dashboard.
+
+- Vercel serves the dashboard and lightweight API functions.
+- Supabase Postgres stores one compact JSONB dashboard snapshot plus a small manual-action queue.
+- The Mac remains the source of truth; the cloud is a read model.
+- The existing Chrome Default profile and browser bridge are reused for read-only LinkedIn checks.
+- Messaging snippets, Service Page requests, and LinkedIn search candidates are imported automatically on the sync interval.
+- Search discovery remains needs_review until evidence is verified.
+- Premium/Matched and Direct Service Requests are separate request types in the Opportunity Inbox.
+- The hosted header exposes connector Online/Offline status and last successful sync.
+- No cloud route can invoke a LinkedIn send action.

@@ -27,3 +27,13 @@ context/brand-voice.md
 
 # OS / editor
 .DS_Store
+.vercel
+
+# Node/Vercel local artifacts
+node_modules/
+.env
+.env.*
+state/*.log
+state/*.error.log
+
+supabase/.temp/

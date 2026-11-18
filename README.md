@@ -8,7 +8,7 @@ The system is designed to replace a bloated paid outreach stack with a small loc
 
 LinkedIn search → LinkedIn research → qualification → personalized draft → manual send → connection/DM tracking → reply preparation → follow-up → meeting booking → meeting outcome → reporting
 
-The system does **not** send LinkedIn actions automatically. LinkedIn inbox and Service Page request data are not treated as a real-time push feed; the local database is updated when a LinkedIn browser-assisted check/import is performed.
+The system does **not** send LinkedIn actions automatically. The existing Chrome Default profile is checked by a local read-only sync agent through the existing browser bridge. Messaging snippets, Service Page requests, and configured LinkedIn search results are imported into the local SQLite engine, then a compact read model is published to the hosted dashboard.
 
 ### Free-by-design
 
@@ -208,6 +208,7 @@ http://127.0.0.1:4177
 
 The dashboard contains:
 
+- Hosted Vercel cockpit with Online/Offline browser-sync status
 - Opportunity Inbox with four lanes: Service Requests, Replies, Follow-ups, Meetings
 - Premium/Matched vs Direct service-request tracking
 - Open LinkedIn links on opportunity rows
@@ -325,3 +326,24 @@ These document the architecture, recovered capabilities and verification evidenc
 This repository is the canonical source for the LinkedIn outreach system.
 
 When adding or changing functionality, update the repository rather than creating another disconnected outreach project.
+
+
+## Hosted dashboard and browser sync
+
+The hosted cockpit is deployed from this repository to Vercel. The local SQLite database remains the canonical working state on the Mac.
+
+The read-only sync agent runs through the existing Chrome Default profile and bridge. It checks:
+
+- LinkedIn Messaging for visible conversation snippets and inbound reply candidates
+- LinkedIn Service Page projects for Direct and Premium/Matched requests
+- the existing People and Posts search pack for discovery candidates
+
+Search candidates enter the research queue and do not qualify themselves. Reply detection stores the actual visible snippet as needs_review; it never writes or sends a response.
+
+The hosted dashboard is a compact read model. It shows an Online/Offline connector state based on the last successful sync, Prospect Queue, Drafts, Follow-ups, Replies, Meetings, Reports, and the Opportunity Inbox. Dashboard buttons can queue record changes, but they never invoke LinkedIn send actions.
+
+Useful commands:
+
+- node scripts/client-engine/cli.js sync-once
+- node scripts/client-engine/cli.js sync 600
+- scripts/client-engine/install-sync-agent.sh
